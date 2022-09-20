@@ -6,7 +6,7 @@ class Vending_Machine:
     transactions = []
     def __init__(self):
         self.products = {}
-    
+
     def get_balance(self):
         return self.balance
 
@@ -58,7 +58,7 @@ class Vending_Machine:
         self.transactions.append(["Add", item_name, product.quantity, item_price])
 
 
-    
+
 class Product:
     def __init__(self, name, quantity, price):
         self.quantity = int(quantity)
@@ -71,7 +71,7 @@ class Product:
 
     def display(self):
         print(f'{self.id :<20} {self.item_name :<25} {self.quantity :<15} {self.item_price :<15}')
-    
+
 val = ""
 
 
@@ -102,7 +102,7 @@ while val := input("Welcome to the cool vending machine\n"):
     #buy item <str> {5}<int>
     #buy item chips 1 2 2 4 3
     elif val.startswith("buy item"):
-        val_array = val.rsplit(' ', 5) 
+        val_array = val.rsplit(' ', 5)
         item_name = val_array[0].replace("buy item", "").strip()
         dollars = int(val_array[1])
         quarters = float(val_array[2])
@@ -122,7 +122,7 @@ while val := input("Welcome to the cool vending machine\n"):
             if change == -2:
                 print("Insufficient funds deposited. Here's your money back")
             elif change > -1:
-                print("Thank you. Your change is: " + "{:.2f}".format(change))     
+                print("Thank you. Your change is: " + "{:.2f}".format(change))
             else:
                 #will never get here because it's tested in has_product
                 print("product not available")
@@ -144,7 +144,7 @@ while val := input("Welcome to the cool vending machine\n"):
             f_arr[inx] = re.sub(r"[\n\t]*", "", f_arr[inx])
             f_arr[inx+1] = re.sub(r"[\n\t]*", "", f_arr[inx+1])
             f_arr[inx+2] = re.sub(r"[\n\t]*", "", f_arr[inx+2])
-            
+
             for cool_variable in range(0,3):
                 if(len(f_arr[inx+cool_variable]) > 30):
                     for inx1 in range(0,len(f_arr[inx+cool_variable])-1):
@@ -155,7 +155,7 @@ while val := input("Welcome to the cool vending machine\n"):
                                 f_arr[inx+cool_variable] = f_arr[inx+cool_variable][:inx1+(2*inx1)+30]
 
 
-                       
+
             print("{: <30} {: <30} {: <40}".format(*[f_arr[inx], f_arr[inx+1], f_arr[inx+2]]))
 
     elif val.startswith("balance"):
