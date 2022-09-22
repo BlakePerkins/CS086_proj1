@@ -10,6 +10,8 @@
 
 - A person can give money in any denomination of dollars, quarters, dimes, nickels, and pennies.
 
+# Project Description
+
 Command  | Syntax  | Example Description  |
 | ------ | ------- | -------------------- |
 balance	| balance | shows the balance |
@@ -19,3 +21,17 @@ add item <str> <int> <float> | add item chips 2 $1.00 | add an item name qty pri
 buy item <str> {5}<int>	| buy item chips 1 2 2 4 3 | buys an item with # dollars, quarters, dimes, nickles, pennies. It also shows change given and the remaining balance with currency distribution. For change, the machine uses the largest denominator of currency that is available. |
 help  | help  | display help menu with these commands |
 exit  | exit  | exit the vending machine |
+
+# Sample Input
+
+    add item chips 20 $.50
+    add item coke 5 $.75
+    add item diet coke 5 $.75
+    inventory
+    buy item coke 0 3 0 0 0
+    inventory
+    buy item chips 1 0 0 0 0
+    buy item diet coke 0 2 0 0 0
+    inventory
+    history
+    balance
