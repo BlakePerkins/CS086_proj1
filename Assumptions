@@ -1,0 +1,14 @@
+Assumptions
+
+The price can be set at any positive value divisible by $0.01. (can't pay/charge in half pennies).
+
+There is no limit to the amout of items the vending machine can hold.
+
+The machine cannot hold a negative quantity of any items.
+
+The vending machine must keep track of the inventory.
+
+A person can give money in any denomination of dollars, quarters, dimes, nickels, and pennies.
+
+The user will follow the structure of the ReadMe
+
