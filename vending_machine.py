@@ -4,8 +4,6 @@ class Vending_Machine:
     products = {}
     balance = 0
     transactions = []
-    def __init__(self):
-        self.products = {}
 
     def get_balance(self):
         return self.balance
@@ -78,86 +76,89 @@ val = ""
 vending_machine = Vending_Machine()
 #add item chips 20 $.50
 while val := input("Welcome to the cool vending machine\n"):
-    if val == "exit":
-        break;
+    try:
+        if val == "exit":
+            break;
 
-    #reduce multiple spaces to 1 space between words
-    val = re.sub(' +', ' ', val)
+        #reduce multiple spaces to 1 space between words
+        val = re.sub(' +', ' ', val)
 
-    #add item <str> <int> <float>
-    #add item chips 2 $1.00
-    if val.startswith("add item"):
-        val_array = val.rsplit(" ", 2)
-        item_price = val_array[2]
-        quantity = val_array[1]
-        item_name = val_array[0].replace("add item", "").strip()
-        if vending_machine.has_product(item_name):
-            vending_machine.add_existing_item(item_name, quantity)
-            vending_machine.products[item_name].update_price(item_price)
-        else: vending_machine.add_new_product(Product(item_name, quantity, item_price))
-
-
+        #add item <str> <int> <float>
+        #add item chips 2 $1.00
+        if val.startswith("add item"):
+            val_array = val.rsplit(" ", 2)
+            item_price = val_array[2]
+            quantity = val_array[1]
+            item_name = val_array[0].replace("add item", "").strip()
+            if vending_machine.has_product(item_name):
+                vending_machine.add_existing_item(item_name, quantity)
+                vending_machine.products[item_name].update_price(item_price)
+            else: vending_machine.add_new_product(Product(item_name, quantity, item_price))
 
 
-    #buy item <str> {5}<int>
-    #buy item chips 1 2 2 4 3
-    elif val.startswith("buy item"):
-        val_array = val.rsplit(' ', 5)
-        item_name = val_array[0].replace("buy item", "").strip()
-        dollars = int(val_array[1])
-        quarters = float(val_array[2])
-        dimes = float(val_array[3])
-        nickels = float(val_array[4])
-        pennies = float(val_array[5])
-        print(dollars)
-        print(quarters*.25)
-        print(dimes*.1)
-        print(nickels*.05)
-        print(pennies*.01)
-        total_amount_deposited = dollars + (quarters*.25) + (dimes*.1) + (nickels * .05) + (pennies * .01)
-        print(total_amount_deposited)
 
-        if vending_machine.has_product(item_name):
-            change = vending_machine.dispense(item_name, total_amount_deposited)
-            if change == -2:
-                print("Insufficient funds deposited. Here's your money back")
-            elif change > -1:
-                print("Thank you. Your change is: " + "{:.2f}".format(change))
+
+        #buy item <str> {5}<int>
+        #buy item chips 1 2 2 4 3
+        elif val.startswith("buy item"):
+            val_array = val.rsplit(' ', 5)
+            item_name = val_array[0].replace("buy item", "").strip()
+            dollars = int(val_array[1])
+            quarters = float(val_array[2])
+            dimes = float(val_array[3])
+            nickels = float(val_array[4])
+            pennies = float(val_array[5])
+            print(dollars)
+            print(quarters*.25)
+            print(dimes*.1)
+            print(nickels*.05)
+            print(pennies*.01)
+            total_amount_deposited = dollars + (quarters*.25) + (dimes*.1) + (nickels * .05) + (pennies * .01)
+            print(total_amount_deposited)
+
+            if vending_machine.has_product(item_name):
+                change = vending_machine.dispense(item_name, total_amount_deposited)
+                if change == -2:
+                    print("Insufficient funds deposited. Here's your money back")
+                elif change > -1:
+                    print("Thank you. Your change is: " + "{:.2f}".format(change))
+                else:
+                    #will never get here because it's tested in has_product
+                    print("product not available")
             else:
-                #will never get here because it's tested in has_product
                 print("product not available")
-        else:
-            print("product not available")
 
-    elif val.startswith("history"):
-        print("Here's your history")
-        vending_machine.get_transactions()
-    elif val.startswith("inventory"):
-        print("Here's your inventory")
-        vending_machine.get_inventory()
-    elif val.startswith("help"):
-        print("Here's your help")
-        f = open("help.txt", "r")
-        f_arr = f.read().split("*col*")
-        for inx in range(0,len(f_arr)-3,3):
-            f_arr[inx] = f_arr[inx].replace('\n','')
-            f_arr[inx] = re.sub(r"[\n\t]*", "", f_arr[inx])
-            f_arr[inx+1] = re.sub(r"[\n\t]*", "", f_arr[inx+1])
-            f_arr[inx+2] = re.sub(r"[\n\t]*", "", f_arr[inx+2])
+        elif val.startswith("history"):
+            print("Here's your history")
+            vending_machine.get_transactions()
+        elif val.startswith("inventory"):
+            print("Here's your inventory")
+            vending_machine.get_inventory()
+        elif val.startswith("help"):
+            print("Here's your help")
+            f = open("help.txt", "r")
+            f_arr = f.read().split("*col*")
+            for inx in range(0,len(f_arr)-3,3):
+                f_arr[inx] = f_arr[inx].replace('\n','')
+                f_arr[inx] = re.sub(r"[\n\t]*", "", f_arr[inx])
+                f_arr[inx+1] = re.sub(r"[\n\t]*", "", f_arr[inx+1])
+                f_arr[inx+2] = re.sub(r"[\n\t]*", "", f_arr[inx+2])
 
-            for cool_variable in range(0,3):
-                if(len(f_arr[inx+cool_variable]) > 30):
-                    for inx1 in range(0,len(f_arr[inx+cool_variable])-1):
-                        if(inx1%30 == 0):
-                            if(len(f_arr[inx+cool_variable][inx1+(2*inx1)+30:]) > 0):
-                                f_arr[inx+cool_variable] = f_arr[inx+cool_variable][:inx1+(2*inx1)+30] + "\n" + (' ' * (cool_variable*30+3)) + f_arr[inx+cool_variable][inx1+(2*inx1)+30:]
-                            else:
-                                f_arr[inx+cool_variable] = f_arr[inx+cool_variable][:inx1+(2*inx1)+30]
+                for cool_variable in range(0,3):
+                    if(len(f_arr[inx+cool_variable]) > 30):
+                        for inx1 in range(0,len(f_arr[inx+cool_variable])-1):
+                            if(inx1%30 == 0):
+                                if(len(f_arr[inx+cool_variable][inx1+(2*inx1)+30:]) > 0):
+                                    f_arr[inx+cool_variable] = f_arr[inx+cool_variable][:inx1+(2*inx1)+30] + "\n" + (' ' * (cool_variable*30+3)) + f_arr[inx+cool_variable][inx1+(2*inx1)+30:]
+                                else:
+                                    f_arr[inx+cool_variable] = f_arr[inx+cool_variable][:inx1+(2*inx1)+30]
 
 
 
-            print("{: <30} {: <30} {: <40}".format(*[f_arr[inx], f_arr[inx+1], f_arr[inx+2]]))
+                print("{: <30} {: <30} {: <40}".format(*[f_arr[inx], f_arr[inx+1], f_arr[inx+2]]))
 
-    elif val.startswith("balance"):
-        print("Here's your balance")
-        print ("$" + "{:.2f}".format(vending_machine.get_balance()))
+        elif val.startswith("balance"):
+            print("Here's your balance")
+            print ("$" + "{:.2f}".format(vending_machine.get_balance()))
+    except:
+        pass
